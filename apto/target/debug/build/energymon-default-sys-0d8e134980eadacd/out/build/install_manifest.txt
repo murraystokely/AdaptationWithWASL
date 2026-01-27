@@ -1,0 +1,4 @@
+/home/vedant/wasl/apto/target/debug/build/energymon-default-sys-0d8e134980eadacd/out/include/energymon/energymon.h
+/home/vedant/wasl/apto/target/debug/build/energymon-default-sys-0d8e134980eadacd/out/lib/libenergymon-default.a
+/home/vedant/wasl/apto/target/debug/build/energymon-default-sys-0d8e134980eadacd/out/include/energymon/energymon-default.h
+/home/vedant/wasl/apto/target/debug/build/energymon-default-sys-0d8e134980eadacd/out/lib/pkgconfig/energymon-default.pc

@@ -1,0 +1,18 @@
+[package]
+name = "OptimizingController"
+version = "0.1.0"
+authors = ["Ahsan Pervaiz <ahsan.pervaiz.anjum@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.40"
+fasteval = "0.2.4"
+env_logger = "0.8.3"
+log = "0.4.14"
+reqwest = { version = "0.11", features = ["json"] }
+tokio = "1"
+serde = "1.0"
+serde_json = "1.0"
+PoleAdaptation = { path = "../PoleAdaptation" }

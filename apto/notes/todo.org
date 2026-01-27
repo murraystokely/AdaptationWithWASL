@@ -1,0 +1,30 @@
+#+STARTUP: indent align
+
+* Immediate
+- [X] Sort read profile by its id
+- [X] Implement system measures (energy/power)
+- [X] Implement example application
+- [ ] Current ~u64~ knobs do not support negative values. FIX THIS!
+- [ ] Investigate
+  - [ ] How does FAST smooth performance.
+    For bursty frames FAST does not have significantly higher performance than normal frames
+
+* Optimizations
+- [ ] Return reference of values in a RefCell
+
+* Design
+- [ ] Tunable trait should not have type constraint
+  Because when we initialize the vector of knobs, it would require all knob values to
+  be of the same type. So I need to remove the constraint (there really is no reason to do this)
+- [ ] Reduce runtime cost of borrow checking in AptoState.
+  Currently, we pay a hefty penalty for repeatedly borrowing refcell.
+  1. A possible fix is to borrow the state once and then pass it to functions but this would be a
+     very poor solution design wise
+  2. Another way would be to only make execute (&mut self) and keep report (&self).
+     Maintain a RefCell structure in AptoState that records user
+     reported measurements for each iteration. Then execute can borrow
+     that structure once per iteration. By doing this we can take the
+     rest of the data structures out of RefCells
+
+* Features
+- [ ] Filter profile based on knob values used by application

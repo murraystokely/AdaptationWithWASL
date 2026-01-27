@@ -1,0 +1,13 @@
+prefix=/home/vedant/Desktop/Tailbench/apto/target/debug/build/energymon-default-sys-41827be02c68cdd9/out
+exec_prefix=${prefix}
+includedir=${prefix}/include/energymon
+libdir=${prefix}/lib
+
+Name: energymon-default
+Description: Dummy EnergyMon implementation
+Version: 0.2.1
+Requires: 
+Requires.private: 
+Cflags: -I${includedir}
+Libs: -L${libdir} -lenergymon-default
+Libs.private: 

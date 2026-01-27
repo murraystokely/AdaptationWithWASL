@@ -1,0 +1,17 @@
+[package]
+name = "apto_tailbench"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+libc = "*"
+log = "*"
+env_logger = "*"
+lazy_static = "*"
+clap = { version = "*", features = ["derive"] }
+apto = { path = "../apto" }
+#tokio = { version = "1", features = ["rt-multi-thread", "macros", "sync", "time"] }
+#futures = "0.3"
+PoleAdaptation = { path = "../PoleAdaptation" }
