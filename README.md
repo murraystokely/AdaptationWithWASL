@@ -6,6 +6,7 @@ WASL is a rate-adaptation based technique for runtime cross-layer coordination
 in multi-tenant clouds to mitigate performance interference arising due to 
 multiple colocated adaptive applications. 
 
+DOI Reference: [Zenodo](https://doi.org/10.5281/zenodo.18415164)
 
 TailBench applications have been used for evaluation. 
 Tailbench details are [here](https://github.com/adaptsyslearn/TailBenchMod).<br>
