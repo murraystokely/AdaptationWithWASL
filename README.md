@@ -18,7 +18,7 @@ Tailbench details are [here](https://github.com/adaptsyslearn/TailBenchMod).
                               helper scripts for profiling or data collection
 |-- apto                    : Processing and Activation,
                               coordination with the Adaptation Module
-|-- SetUp.md                : Readme about the High-level setup of the system
+|-- SetUp.md                : Readme about the setup of the overall system
 |-- Plots                   : Scripts related to some results
 ```
 TailBench                   : Updates to standard TailBench suite used for experiments
