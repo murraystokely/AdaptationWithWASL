@@ -28,12 +28,12 @@ In general, sudo/root access needed for seamless execution.
    These relate to measured parameters and configuration knobs as in Tables. 2 and 3 in the paper. 
    
 
-6. Execute:
+5. Execute:
 
    *cd apto-tailbench-apps* <br>
    *cargo build --release --bin main*
 
-7. For data collection and interference mitigation, profiling and adaptation 
+6. For data collection and interference mitigation, profiling and adaptation 
    experiments have to be run separately in different modes,<br>
    e.g., single module, multi-module, RL, PI, monolithic etc. 
 

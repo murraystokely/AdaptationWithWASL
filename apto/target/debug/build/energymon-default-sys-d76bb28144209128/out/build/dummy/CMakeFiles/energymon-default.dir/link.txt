@@ -1,2 +1,0 @@
-/usr/bin/ar qc libenergymon-default.a "CMakeFiles/energymon-default.dir/energymon-dummy.c.o" "CMakeFiles/energymon-default.dir/__/common/energymon-util.c.o"
-/usr/bin/ranlib libenergymon-default.a

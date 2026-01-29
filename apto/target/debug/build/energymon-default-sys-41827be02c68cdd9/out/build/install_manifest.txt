@@ -1,4 +1,0 @@
-/home/vedant/Desktop/Tailbench/apto/target/debug/build/energymon-default-sys-41827be02c68cdd9/out/include/energymon/energymon.h
-/home/vedant/Desktop/Tailbench/apto/target/debug/build/energymon-default-sys-41827be02c68cdd9/out/lib/libenergymon-default.a
-/home/vedant/Desktop/Tailbench/apto/target/debug/build/energymon-default-sys-41827be02c68cdd9/out/include/energymon/energymon-default.h
-/home/vedant/Desktop/Tailbench/apto/target/debug/build/energymon-default-sys-41827be02c68cdd9/out/lib/pkgconfig/energymon-default.pc

@@ -1,4 +1,0 @@
-/Users/vedantkodagi/Desktop/UChicago/Research/wasl/apto/target/debug/build/energymon-default-sys-d76bb28144209128/out/include/energymon/energymon.h
-/Users/vedantkodagi/Desktop/UChicago/Research/wasl/apto/target/debug/build/energymon-default-sys-d76bb28144209128/out/lib/libenergymon-default.a
-/Users/vedantkodagi/Desktop/UChicago/Research/wasl/apto/target/debug/build/energymon-default-sys-d76bb28144209128/out/include/energymon/energymon-default.h
-/Users/vedantkodagi/Desktop/UChicago/Research/wasl/apto/target/debug/build/energymon-default-sys-d76bb28144209128/out/lib/pkgconfig/energymon-default.pc
