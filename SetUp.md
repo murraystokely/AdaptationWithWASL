@@ -9,6 +9,7 @@ In general, sudo/root access needed for seamless execution.
    curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh <br>
    (default standard installation)
 
+   sudo apt install -y cmake pkg-config libssl-dev cpuid rustc cargo
    rustup update
 
 2. Successfully precompile updated version of [TailBench](https://github.com/adaptsyslearn/TailBenchMod) applications
