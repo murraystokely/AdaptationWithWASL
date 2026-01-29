@@ -14,7 +14,8 @@ Tailbench details are [here](https://github.com/adaptsyslearn/TailBenchMod).
 /                           : Overall Runtime System
 |-- OptimizingController    : Adaptation Module 
 |-- PoleAdaptation          : WASL-based Rate Adaptation
-|-- apto-tailbench-apps     : Wrapper/Profiler for Application/System 
+|-- apto-tailbench-apps     : Wrapper/Profiler for Application/System with
+                              helper scripts for profiling or data collection
 |-- apto                    : Processing and Activation,
                               coordination with the Adaptation Module
 |-- SetUp.md                : Readme about the High-level setup of the system
