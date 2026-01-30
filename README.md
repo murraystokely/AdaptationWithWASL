@@ -25,7 +25,7 @@ TailBench      : Updates to standard TailBench suite used for experiments
 |-- Plots                   : Scripts related to some results
 ```
 
-The *Readme* files for each of the folders are being further updated for documentation. 
+The *Readme* files for each of the folders are being further updated for enhanced documentation. 
 
 ## Citation
 
