@@ -145,7 +145,7 @@ run_multi_application() {
             goal1=${goals[$app1]}
 
             run_multi_control $app0 $goal0 $app1 $goal1 $dev_target multi-application/control
-            run_multi_control $app0 $goal0 $app1 $goal1 $dev_target multi-application/learning
+            run_multi_learning $app0 $goal0 $app1 $goal1 $dev_target multi-application/learning
         done
 
     done
