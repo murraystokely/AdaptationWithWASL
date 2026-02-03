@@ -1,7 +1,7 @@
 # Adaptation With WASL
 
-This repo contains source code and other artifacts related to the paper
-"WASL: Harmonizing Uncoordinated Adaptive Modules in Multi-Tenant Cloud Systems".
+This repo contains source code and other artifacts related to the paper 
+*WASL: Harmonizing Uncoordinated Adaptive Modules in Multi-Tenant Cloud Systems*.
 WASL is a rate-adaptation based technique for runtime cross-layer coordination
 in multi-tenant clouds to mitigate performance interference arising due to
 multiple colocated adaptive applications.
