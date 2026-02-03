@@ -21,7 +21,7 @@ a. Applications connect to `apto-tailbench-apps` using a linux message queue to 
 b. `apto-tailbench-apps` sets up `apto` with a specific local adaptation method and an application goal. 
 `apto-tailbench-apps` communicates the information it receives from the (tailbench) applications to `apto`. <br> 
 c. `apto` uses this information along with the `OptimizingController` for resource adjustments to achieve an application's goals. <br> 
-d. The `OptimizingController` (adaptation method) invokes WASL (`PoleAdaptation`) as and when needed to address multi-module multi-tenant (global) interference.
+d. The `OptimizingController` (adaptation method) invokes WASL (`PoleAdaptation`) as and when needed to address multi-tenant (global) interference.
 
 ## Prerequisites
 
