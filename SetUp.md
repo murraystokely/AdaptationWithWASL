@@ -61,8 +61,8 @@ It is recommended that the `knobtable` and `measuretable` be renamed to `<APPLIC
 
 ## Running Experiments
 
-The overall runtime system executes all applications and system as modules. Each module is assigned a tag.<br>
-For a single application scenario, the application is always assigned the tag 0, while the system the tag 1. 
+The overall runtime system executes all application(s) and system as modules. Each module is assigned a tag.<br>
+For a single application scenario, the application is always assigned the tag 0, while the system the tag 1. <br>
 For a multi application scenario, the applications are always assigned the tag 0 and 1, while the system the tag 2.
 
 ### Selecting adaptation module type
