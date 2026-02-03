@@ -15,7 +15,7 @@ The following independent modules work in conjunction for the functioning of the
 
 Interactions between the modules:
 
-a. Applications connect to `apto-tailbench-apps` using a linux message queues to report performance information.<br>
+a. Applications connect to `apto-tailbench-apps` using a linux message queue to report performance information.<br>
 b. `apto-tailbench-apps` is responsible for setting up `apto` with the type of adaptation and the goal of the application that needs to be achieved. 
 `apto-tailbench-apps` passes the information that it receives from the (tailbench) applications to `apto`. <br> 
 c. `apto` uses this information along with the `OptimizingController` for resource adjustments to achieve an application's goals. <br> 
