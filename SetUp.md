@@ -58,7 +58,7 @@ $ sudo RUST_LOG=info PROFILE=1000 ./target/release/main --warmup-time <WARMUP-SE
 ```
 
 This command outputs a file named `measuretable`. 
-It is recommended that the `knobtable` and `measuretable` be renamed to `<APPLICATION-NAME>.kt` and `<APPLICATION-NAME>.mt`, respectively. <br>
+It is recommended that the `knobtable` (kt) and `measuretable` (mt) be renamed to `<APPLICATION-NAME>.kt` and `<APPLICATION-NAME>.mt`, respectively. <br>
 
 
 ## Running Adaptation-related Experiments
@@ -67,27 +67,28 @@ The overall runtime system executes all application(s) and system as modules. Ea
 For a single application scenario, the application is always assigned the tag 0, while the system the tag 1. <br>
 For a multi application scenario, the applications are always assigned the tag 0 and 1, while the system the tag 2.
 
-### Selecting adaptation module type
-Each module, can be executed with a different adaptation type. The adaptation type is controlled using environment variables as follows:
+### Selecting Adaptation Method
+An application or system is executed with specific (local) adaptation method. 
+This specification is controlled by environment variables as follows:
 ```
-# Run with learning based adaptation
+# Run with RL Reinforcement Learning (RL)-based adaptation
 LEARNING_BASED_<TAG>=y CONF_TYPE_<TAG>=multi
 
-# Run with adaptive control
+# Run with Adaptive Control (AC) Module
 CONF_TYPE_<TAG>=multi
 
 # Run with PI control
 CONT_TYPE_<TAG>=multi KP_<TAG>=<PROPORTIONAL_GAIN_VALUE>
 ```
 
-### Enabling WASL for adaptation modules
+### WASL Invocation by Adaptation Module(s)
 
-Similarly, WASL can be enabled for each adaptation module using environment variables as follows:
+An adaptive module can invoke WASL using environment variables as follows:
 ```
 ADAPT_TYPE=linear ADAPT_INST=<LIST-OF-TAGS> DEV_TARGET=<GAMMA>
 ```
 
-### Selecting the applications
+### Experimenting with Adaptation Module(s) for Application(s)
 
 Finally, combine the aforementioned environment variables to run an experiment as follows:
 ```
@@ -107,4 +108,4 @@ sudo <ENVIRONMENT_VARIABLES> ./target/release/main --exec-time <EXECUTION-TIME-S
     <APPLICATION-0-NAME> <APPLICATION-0-TARGET> \
     <APPLICATION-1-NAME> <APPLICATION-1-TARGET>
 ```
-The resulting metric values per iteration are printed to `stdout` and should be piped to a file.
+The resulting parameters for each iteration are printed to `stdout` and may be dumped to a file.
