@@ -18,12 +18,12 @@ The SetUp instructions are available [here](https://github.com/adaptsyslearn/Ada
 ### Code Structure
 ```bash
 /                           : Overall Runtime System
-|-- OptimizingController    : Adaptation Module
-|-- PoleAdaptation          : WASL-based Rate Adaptation
 |-- apto-tailbench-apps     : Wrapper/Profiler for Application/System
-|-- apto-tailbench-apps/scripts : Helper scripts for profiling or data collection
+|-- apto-tailbench-apps/scripts : Helper scripts for profiling/parsing
 |-- apto                    : Processing and Activation,
                               coordination with the Adaptation Module
+|-- OptimizingController    : Adaptation Module (local)
+|-- PoleAdaptation          : WASL-based Multi-Module Adaptation (global)
 |-- SetUp.md                : Readme about the setup of the overall system
 |-- Plots                   : Scripts related to some results
 ```
