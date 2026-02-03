@@ -95,17 +95,17 @@ Finally, combine the aforementioned environment variables to run an experiment a
 cd ./apto-tailbench-apps/
 cargo build --release --bin main
 
-# Run one application and a system module with a monolithic adaptation
+# Run one application and system with (centralized) monolithic coordination
 sudo <ENVIRONMENT_VARIABLES> ./target/release/main --exec-time <EXECUTION-TIME-SECS> monolithic \
     <APPLICATION-NAME> <APPLICATION-TARGET>
 
-# Run one application and a system module with multiple uncoordinated adaptation modules
+# Run one application and system with multiple uncoordinated adaptation modules
 sudo <ENVIRONMENT_VARIABLES> ./target/release/main --exec-time <EXECUTION-TIME-SECS> multimodule \
     <APPLICATION-NAME> <APPLICATION-TARGET>
 
-# Run two applications and a system module with multiple uncoordinated adaptation modules
+# Run two applications and system with multiple uncoordinated adaptation modules
 sudo <ENVIRONMENT_VARIABLES> ./target/release/main --exec-time <EXECUTION-TIME-SECS> multimodule \
     <APPLICATION-0-NAME> <APPLICATION-0-TARGET> \
     <APPLICATION-1-NAME> <APPLICATION-1-TARGET>
 ```
-The resulting parameters for each iteration are printed to `stdout` and may be dumped to a file.
+The resulting parameters for each iteration are printed to `stdout` and can be dumped to a file.
