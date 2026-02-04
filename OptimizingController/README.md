@@ -3,7 +3,7 @@
 This folder contains the implementation of the three adaptation modules 
 used in the study. 
 
-The implementation can be found in [./src/controller/optimizing_controller.rs](./src/controller/optimizing_controller.rs). <br> 
+PI- and RL-module: [./src/controller/optimizing_controller.rs](./src/controller/optimizing_controller.rs). <br> 
 
 Adaptive control (AC)-module: [./src/controller/xup_state.rs](./src/controller/xup_state.rs) and [./src/kalman_filter.rs](./src/kalman_filter.rs). <br>
 
