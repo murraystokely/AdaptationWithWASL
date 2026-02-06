@@ -11,7 +11,7 @@ The following independent modules work in conjunction for the functioning of the
 2. [apto](./apto) -- A layer that application(s) and the system can use to process the profiled parameters, i.e. a rust implementation of the [GOAL](https://dl.acm.org/doi/pdf/10.1145/3563835.3567655) work.
 3. [OptimizingController](./OptimizingController) -- Local adaptation module(s) for the system and the application.
    
-   Algo.1 involves 1, 2, and 3. 
+   Algo.1 (in the paper) involves 1, 2, and 3 above. 
 4. [PoleAdaptation](./PoleAdaptation) -- The novel multi-module adaptation method WASL as proposed in Algo.2 of the paper.
    
 
