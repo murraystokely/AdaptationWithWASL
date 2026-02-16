@@ -23,3 +23,9 @@ target
 # AWS CLI install artifacts
 infra/aws/
 infra/awscliv2.zip
+
+# Experiment result data (too large for git)
+results/
+
+# Confidential artifact review
+ARTIFACT_REVIEW.md
