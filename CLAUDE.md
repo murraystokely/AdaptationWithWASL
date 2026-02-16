@@ -96,10 +96,22 @@ Each module gets a tag (app=0, system=1 for single-app; apps=0,1, system=2 for m
 - Multi-app variants in `profiles/multi/`
 - Helper scripts in `apto-tailbench-apps/scripts/` (Python)
 
+## Known Issues
+
+- **File creation crash (fixed):** `optimize.rs` used `create_new(true)` which panics if output files already exist, causing experiments to crash after 1 iteration on re-runs. Fixed to use `create(true).truncate(true)`.
+- **Cargo edition typo (fixed):** `apto-tailbench-apps/Cargo.toml` had `edition = "2025"` (doesn't exist). Fixed to `edition = "2021"`.
+- **Energy monitoring:** Runtime energy values (`energy`, `powerConsumption`, `energyDelta`) may report `none` even with energymon/MSR installed. This affects WASL coordination which relies on energy-performance tradeoffs. Needs investigation in the energymon integration path in `apto/src/optimize.rs`.
+- **Binary paths:** `apto-tailbench-apps/src/apps.rs` has hardcoded paths to TailBench binaries that must be updated for your environment.
+
+## Infrastructure
+
+AWS CloudFormation templates in `infra/` provision a bare-metal EC2 instance (c5.metal) required for RAPL energy monitoring, MSR access, and CPU frequency scaling. See `infra/README.md` for deployment steps.
+
 ## Prerequisites
 
 - Root access (recommended) for energy monitoring
-- [Energymon](https://github.com/energymon/energymon) library installed
+- [Energymon](https://github.com/energymon/energymon) library installed (compiled with `-DDEFAULT=msr` for MSR-based energy reading)
 - Rust toolchain with cargo
 - [Modified TailBench](https://github.com/adaptsyslearn/TailBenchMod) applications compiled
-- Linux with message queue and CPU frequency/core control support (x86)
+- Bare-metal Linux with MSR, RAPL, message queue, and CPU frequency/core control support (x86)
+- Intel `intel_pstate` driver must be set to passive mode for `userspace` governor
