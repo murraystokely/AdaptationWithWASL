@@ -34,13 +34,26 @@ modprobe msr
 # Ensure msr module loads on boot
 echo "msr" >> /etc/modules-load.d/msr.conf
 
+# intel_pstate driver (common on Xeon) must be switched to passive mode
+# before the "userspace" governor becomes available
+if [ -f /sys/devices/system/cpu/intel_pstate/status ]; then
+  echo "passive" > /sys/devices/system/cpu/intel_pstate/status
+  echo "Switched intel_pstate to passive mode"
+fi
+
 # Set CPU frequency governor to userspace so WASL can control frequencies
 for gov_file in /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor; do
   if [ -f "$gov_file" ]; then
-    echo "userspace" > "$gov_file"
+    echo "userspace" > "$gov_file" 2>/dev/null || true
   fi
 done
-echo "CPU governor set to userspace on all cores"
+
+# Verify governor was applied
+CURRENT_GOV=$(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null || echo "unknown")
+echo "CPU governor on cpu0: ${CURRENT_GOV}"
+if [ "$CURRENT_GOV" != "userspace" ]; then
+  echo "WARNING: Could not set userspace governor. You may need to add 'intel_pstate=passive' to kernel boot params in /etc/default/grub, then update-grub and reboot."
+fi
 
 # Verify RAPL is accessible
 if [ -d /sys/class/powercap/intel-rapl ]; then
