@@ -1,0 +1,162 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  AWS CloudFormation template for provisioning a bare-metal EC2 instance
+  to run AdaptationWithWASL experiments. Bare metal is required for RAPL
+  energy monitoring, CPU frequency scaling, and MSR access.
+
+Parameters:
+  KeyPairName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Name of an existing EC2 key pair for SSH access.
+
+  InstanceType:
+    Type: String
+    Default: c5.metal
+    AllowedValues:
+      - c5.metal      # 96 vCPU, 192 GB, Intel Xeon Platinum 8275CL — ~$3.26/hr
+      - m5.metal       # 96 vCPU, 384 GB, Intel Xeon Platinum 8259CL — ~$4.61/hr
+      - c5d.metal      # 96 vCPU, 192 GB + 4x900 GB NVMe SSD         — ~$4.61/hr
+    Description: >
+      Bare-metal instance type. All options provide 96 physical cores (48 cores
+      x 2 threads) with full access to RAPL, MSR, and cpufreq. c5.metal is the
+      cheapest option suitable for WASL experiments.
+
+  VolumeSize:
+    Type: Number
+    Default: 128
+    MinValue: 64
+    MaxValue: 500
+    Description: Root EBS volume size in GB (gp3).
+
+  AllowSSHFrom:
+    Type: String
+    Default: 0.0.0.0/0
+    Description: >
+      CIDR block allowed to SSH into the instance. Set to your IP
+      (e.g. 203.0.113.5/32) for better security. Default allows all.
+
+Mappings:
+  # Ubuntu 22.04 LTS (Jammy) amd64 HVM EBS AMIs per region.
+  # These are Canonical's official AMI IDs. Update if deploying in a
+  # region not listed here, or use SSM parameter resolution instead.
+  RegionAMI:
+    us-east-1:
+      AMI: resolve:ssm:/aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id
+    us-east-2:
+      AMI: resolve:ssm:/aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id
+    us-west-1:
+      AMI: resolve:ssm:/aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id
+    us-west-2:
+      AMI: resolve:ssm:/aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id
+    eu-west-1:
+      AMI: resolve:ssm:/aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id
+    eu-central-1:
+      AMI: resolve:ssm:/aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id
+    ap-southeast-1:
+      AMI: resolve:ssm:/aws/service/canonical/ubuntu/server/22.04/stable/current/amd64/hvm/ebs-gp2/ami-id
+
+Resources:
+  # ---------- VPC ----------
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: wasl-vpc
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: wasl-igw
+
+  GatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.1.0/24
+      MapPublicIpOnLaunch: true
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: wasl-subnet
+
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: wasl-rt
+
+  DefaultRoute:
+    Type: AWS::EC2::Route
+    DependsOn: GatewayAttachment
+    Properties:
+      RouteTableId: !Ref RouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+
+  SubnetRouteTableAssoc:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet
+      RouteTableId: !Ref RouteTable
+
+  # ---------- Security Group ----------
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow SSH access to WASL bare-metal instance
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref AllowSSHFrom
+      Tags:
+        - Key: Name
+          Value: wasl-sg
+
+  # ---------- EC2 Bare-Metal Instance ----------
+  WASLInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      KeyName: !Ref KeyPairName
+      ImageId: !FindInMap [RegionAMI, !Ref 'AWS::Region', AMI]
+      SubnetId: !Ref PublicSubnet
+      SecurityGroupIds:
+        - !Ref SecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeSize: !Ref VolumeSize
+            VolumeType: gp3
+            DeleteOnTermination: true
+      Tags:
+        - Key: Name
+          Value: wasl-bare-metal
+
+Outputs:
+  InstanceId:
+    Description: EC2 instance ID (use with aws ec2 stop-instances / start-instances)
+    Value: !Ref WASLInstance
+
+  PublicIP:
+    Description: Public IP address of the instance
+    Value: !GetAtt WASLInstance.PublicIp
+
+  SSHCommand:
+    Description: SSH command to connect
+    Value: !Sub 'ssh ubuntu@${WASLInstance.PublicIp}'
