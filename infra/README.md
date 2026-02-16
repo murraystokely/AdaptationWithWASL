@@ -23,6 +23,23 @@ These are not exposed on any virtualized cloud instance (Azure, AWS standard EC2
      --output text > ~/.ssh/wasl-key.pem
    chmod 400 ~/.ssh/wasl-key.pem
    ```
+3. **Upgraded AWS account (not Free Tier).** Bare-metal instances like `c5.metal` are not
+   eligible under the Free Tier plan. If your account is still on Free Tier, upgrade it
+   from the [AWS Billing console](https://console.aws.amazon.com/billing/).
+4. **vCPU quota of at least 96.** New accounts default to a low on-demand vCPU limit
+   (often 16), but `c5.metal` requires 96. Request an increase:
+   ```bash
+   aws service-quotas request-service-quota-increase \
+     --service-code ec2 \
+     --quota-code L-1216C47A \
+     --desired-value 96
+   ```
+   This is typically approved within minutes but can take up to a few hours. Check status
+   with:
+   ```bash
+   aws service-quotas get-requested-service-quota-change \
+     --request-id <REQUEST_ID_FROM_ABOVE>
+   ```
 
 ## Step 1 — Deploy the stack
 
