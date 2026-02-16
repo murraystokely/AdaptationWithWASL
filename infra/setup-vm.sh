@@ -84,7 +84,7 @@ if [ ! -d energymon ]; then
 fi
 cd energymon
 mkdir -p build && cd build
-cmake .. -DDEFAULT=msr
+cmake .. -DENERGYMON_BUILD_DEFAULT=msr
 make -j"$(nproc)"
 make install
 ldconfig

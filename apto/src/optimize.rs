@@ -465,12 +465,16 @@ impl Apto {
         // Update knobs
         iteration = iteration.wrapping_add(1);
 
-        // Record power numbers across windows during execution
+        // Record power numbers across windows during execution.
+        // Energy values are saved and re-registered after actuate_knobs,
+        // which calls reset_window() at window boundaries.
+        let mut energy_snapshot: Option<(f64, f64, f64, f64)> = None;
         if iteration == 1 || iteration % self.configurations.window_size == 0 {
             if iteration > 1 {
                 energy_monitor.stop();
 
-                self.measure("energy", energy_monitor.energy());
+                let energy = energy_monitor.energy();
+                self.measure("energy", energy);
                 let energy_delta = match energy_monitor.energy_delta() {
                     Ok(energy_delta) => energy_delta,
                     Err(e) => {
@@ -492,21 +496,32 @@ impl Apto {
                             .unwrap_or(0.0)
                     }
                 };
+                let window_latency = energy_monitor.duration().unwrap();
                 self.measure("powerConsumption", power_consumption);
-                self.measure("windowLatency", energy_monitor.duration().unwrap());
+                self.measure("windowLatency", window_latency);
                 info!(
                     "REPLACE: instance:{},powerConsumption:{},energyDelta:{},windowLatency:{}",
                     self.configurations.instance_id,
                     power_consumption,
                     energy_delta,
-                    energy_monitor.duration().unwrap()
+                    window_latency
                 );
+
+                energy_snapshot = Some((energy, energy_delta, power_consumption, window_latency));
             }
 
             energy_monitor.start();
         }
 
         current_config = self.actuate_knobs(iteration, current_config);
+
+        // Re-register energy values after window reset so they survive for log_state
+        if let Some((energy, energy_delta, power_consumption, window_latency)) = energy_snapshot {
+            self.measure("energy", energy);
+            self.measure("energyDelta", energy_delta);
+            self.measure("powerConsumption", power_consumption);
+            self.measure("windowLatency", window_latency);
+        }
 
         // Execute application loop
         let should_terminate = !main_loop(self);
